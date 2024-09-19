@@ -1,0 +1,23 @@
+/* Import the Poppins font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.institution-title {
+    font-size: 5.5rem; /* Larger font size */
+    font-weight: 800; /* Bold text */
+    color: #343a40; /* Darker color for the heading */
+}
+
+/* Global styles in App.css or a global CSS file */
+body {
+    background-color: #000;
+    color: #fff;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
