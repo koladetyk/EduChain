@@ -19,6 +19,8 @@ function InstitutionDashboard() {
 
     const [qrValue, setQrValue] = useState('');
     const [students, setStudents] = useState([]);
+    const [txnHash, setTxnHash] = useState(''); // New state for transaction hash
+    const [showTransactionDetails, setShowTransactionDetails] = useState(false); // To toggle the display of transaction details
 
     const handleInstitutionChange = (e) => {
         setInstitutionData({ ...institutionData, [e.target.name]: e.target.value });
@@ -56,12 +58,17 @@ function InstitutionDashboard() {
                 }
             });
             
-            // Use token_id instead of transactionHash for QR Code value
+            // Use token_id and transactionHash for QR Code value
             const tokenId = response.data.tokenId; // Get the numeric token ID from the response
+            const transactionHash = response.data.transactionHash; // Get the transaction hash from the response
             const qrData = `${tokenId},${credentialData.studentWalletAddress}`;
-            setQrValue(qrData);
             
-            alert('Credential issued successfully! Token ID: ' + tokenId);
+            // Set both tokenId and transactionHash
+            setQrValue(qrData);
+            setTxnHash(transactionHash);
+            setShowTransactionDetails(true); // Show the transaction details
+
+            alert('Credential issued successfully! Token ID: ' + tokenId + '\nTransaction Hash: ' + transactionHash);
         } catch (error) {
             console.error('Error issuing credential!', error);
         }
@@ -86,7 +93,7 @@ function InstitutionDashboard() {
             {/* Header with Logo and Title */}
             <div className="d-flex align-items-center justify-content-center mb-4">
                 <img src={logo} alt="EduChain Logo" style={{ width: '100px', marginRight: '10px' }} />
-                <h1 className="text-white">Institution Dashboard</h1>
+                <h1 className="text-black">Institution Dashboard</h1>
             </div>
 
             {/* Institution Form */}
@@ -205,11 +212,13 @@ function InstitutionDashboard() {
                 </div>
             </div>
 
-            {/* QR Code Display */}
-            {qrValue && (
+            {/* QR Code and Transaction Details Display */}
+            {showTransactionDetails && (
                 <div className="card mt-4 shadow-sm">
-                    <div className="card-header bg-success text-white">QR Code for Credential</div>
+                    <div className="card-header bg-success text-white">Credential Details</div>
                     <div className="card-body text-center">
+                        <p><strong>Token ID:</strong> {qrValue.split(',')[0]}</p>
+                        <p><strong>Transaction Hash:</strong> <a href={`https://testnet.etherscan.io/tx/${txnHash}`} target="_blank" rel="noopener noreferrer">{txnHash}</a></p>
                         <QRCodeCanvas value={qrValue} size={256} />
                     </div>
                 </div>
