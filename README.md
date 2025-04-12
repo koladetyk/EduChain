@@ -1,6 +1,6 @@
 # EduChain
 
-##https://sites.google.com/view/ayokoladeerinlesportfolio/projects/decentralized-cridential-verification
+## https://sites.google.com/view/ayokoladeerinlesportfolio/projects/decentralized-cridential-verification
 
 ## Overview
 
